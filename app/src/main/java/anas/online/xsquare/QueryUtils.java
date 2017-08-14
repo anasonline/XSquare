@@ -12,8 +12,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import anas.online.xsquare.model.Venue;
-
 /**
  * Created by anas on 12.08.17.
  */

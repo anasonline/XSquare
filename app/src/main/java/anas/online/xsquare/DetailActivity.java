@@ -13,14 +13,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import anas.online.xsquare.model.Venue;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -42,8 +43,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     TextView distanceValue;
     @BindView(R.id.btn_map)
     Button mapButton;
+    @BindView(R.id.pb_loading_indicator)
+    ProgressBar mLoadingIndicator;
     String photoId;
-    private Venue mVenueData;
 
     private static URL buildUrl(String photoId) {
 
@@ -74,9 +76,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
 
-        mVenueData = getIntent().getExtras().getParcelable("EXTRA_MOVIE");
+        Venue mVenueData = getIntent().getExtras().getParcelable("EXTRA_MOVIE");
 
-        photoId = mVenueData.getId();
+        photoId = mVenueData != null ? mVenueData.getId() : null;
 
         name.setText(mVenueData.getName());
         addressDetails.setText(mVenueData.getAddress());
@@ -103,8 +105,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
         } else {
 
-            //TODO Show loading indicator over the image + error message
-            //showErrorMessage();
+            showErrorMessage();
 
             Log.v("DetailActivity", "Loading Error");
         }
@@ -113,10 +114,12 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
             @Override
             public void onClick(View view) {
-                Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + addressDetails.getText().toString());
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                startActivity(mapIntent);
+                if (addressDetails.getText().equals(getResources().getText(R.string.no_address_available))) {
+                    Toast.makeText(DetailActivity.this, "Address is not available",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    openMap();
+                }
             }
         });
 
@@ -130,6 +133,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     @Override
     public void onLoadFinished(Loader<String> loader, String s) {
         Picasso.with(this).load(s).placeholder(R.drawable.placeholder).into(photo);
+        mLoadingIndicator.setVisibility(View.GONE);
     }
 
     @Override
@@ -137,10 +141,21 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     }
 
-    public void openMap(String address) {
-        Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + addressDetails.getText().toString());
+    public void openMap() {
+        Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + addressDetails.getText());
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
-        startActivity(mapIntent);
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        } else {
+            //Prevent a crash if Google Maps is not available on the device
+            Toast.makeText(DetailActivity.this, "Google Maps is Not Available",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void showErrorMessage() {
+        mLoadingIndicator.setVisibility(View.GONE);
+        Toast.makeText(this, "No Connection!", Toast.LENGTH_SHORT).show();
     }
 }

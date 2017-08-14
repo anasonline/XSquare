@@ -6,13 +6,11 @@ import android.content.AsyncTaskLoader;
 import java.net.URL;
 import java.util.List;
 
-import anas.online.xsquare.model.Venue;
-
 /**
  * Created by anas on 12.08.17.
  */
 
-public class VenueLoader extends AsyncTaskLoader<List<Venue>> {
+class VenueLoader extends AsyncTaskLoader<List<Venue>> {
 
     private final URL mUrl;
 

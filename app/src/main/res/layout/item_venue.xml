@@ -29,7 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:paddingRight="16dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/ColorPrimaryText"
         tools:text="300" />
@@ -40,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:text="m"
+        android:text="@string/distance_measuring_unit"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/ColorPrimaryText" />
 

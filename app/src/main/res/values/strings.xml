@@ -2,4 +2,10 @@
     <string name="app_name">XSquare</string>
 
     <string name="no_connection_error">No Internet Connection!</string>
+    <string name="no_address_available">Address is not available</string>
+
+    <string name="address">Address:</string>
+    <string name="distance">Distance:</string>
+    <string name="distance_measuring_unit">m</string>
+    <string name="map">MAP</string>
 </resources>

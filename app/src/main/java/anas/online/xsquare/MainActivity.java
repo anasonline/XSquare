@@ -21,7 +21,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import anas.online.xsquare.model.Venue;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -45,8 +44,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     ProgressBar mLoadingIndicator;
     private VenueAdapter mVenueAdapter;
     private List<Venue> mVenues;
-
-    private int mPosition = RecyclerView.NO_POSITION;
 
     private static URL buildUrl() {
 
@@ -112,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
-    public void setupGridLayout() {
+    private void setupGridLayout() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(layoutManager);
 
@@ -129,8 +126,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<List<Venue>> loader, List<Venue> venues) {
         mLoadingIndicator.setVisibility(View.GONE);
-
-        //   venues.clear();
 
         if (venues != null && !venues.isEmpty()) {
             mVenueAdapter.swapList(venues);

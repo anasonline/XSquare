@@ -1,4 +1,4 @@
-package anas.online.xsquare.model;
+package anas.online.xsquare;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -32,7 +32,7 @@ public class Venue implements Parcelable {
         this.distance = distance;
     }
 
-    protected Venue(Parcel in) {
+    private Venue(Parcel in) {
         id = in.readString();
         name = in.readString();
         address = in.readString();

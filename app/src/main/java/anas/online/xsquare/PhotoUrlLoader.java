@@ -9,7 +9,7 @@ import java.net.URL;
  * Created by anas on 13.08.17.
  */
 
-public class PhotoUrlLoader extends AsyncTaskLoader<String> {
+class PhotoUrlLoader extends AsyncTaskLoader<String> {
 
     private final URL mUrl;
 
