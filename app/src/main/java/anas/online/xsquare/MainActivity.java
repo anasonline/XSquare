@@ -63,8 +63,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             e.printStackTrace();
         }
 
-        Log.v("MainActivity", builtUri.toString());
-
         return url;
     }
 
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mLoadingIndicator.setVisibility(View.VISIBLE);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.venues_recycler_view);
-        setupGridLayout();
+        setupLayout();
 
         mVenueAdapter = new VenueAdapter(mVenues, R.layout.item_venue, getApplicationContext(), this);
         mRecyclerView.setAdapter(mVenueAdapter);
@@ -97,19 +95,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             LoaderManager loaderManager = getLoaderManager();
 
             // Initialize the loader. Pass in the int ID constant defined above and pass in null for
-            // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
-            // because this activity implements the LoaderCallbacks interface).
+            // the bundle. Pass in this activity for the LoaderCallbacks parameter.
             loaderManager.initLoader(VENUE_LOADER_ID, null, this);
 
         } else {
-
             showErrorMessage();
-
-            Log.v("MainActivity", "Loading Error");
+            Log.v(TAG, "Loading Error");
         }
     }
 
-    private void setupGridLayout() {
+    private void setupLayout() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(layoutManager);
 
@@ -146,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onClick(Venue venue) {
         Intent intent = new Intent(MainActivity.this, DetailActivity.class);
         // Put the Parcelable Venue object into an intent
-        intent.putExtra("EXTRA_MOVIE", venue);
+        intent.putExtra("EXTRA_VENUE", venue);
         startActivity(intent);
     }
 }

@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by anas on 12.08.17.
+ * The model class that holds the Venue information
  */
 
 public class Venue implements Parcelable {

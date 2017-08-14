@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by anas on 12.08.17.
- */
 
 public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.VenueAdapterViewHolder> {
     private final Context mContext;
@@ -22,7 +19,6 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.VenueAdapter
 
     public VenueAdapter(List<Venue> venues, int rowLayout, Context context,
                         VenueAdapterOnClickHandler clickHandler) {
-
         mVenues = venues;
         mContext = context;
         mRowLayout = rowLayout;
@@ -70,16 +66,13 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.VenueAdapter
 
     public class VenueAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        // final ImageView photo;
         final TextView name;
         final TextView address;
         final TextView distance;
 
-
         public VenueAdapterViewHolder(View view) {
             super(view);
 
-            // photo = (ImageView) view.findViewById(R.id.venue_image);
             name = (TextView) view.findViewById(R.id.name);
             address = (TextView) view.findViewById(R.id.address);
             distance = (TextView) view.findViewById(R.id.distance);

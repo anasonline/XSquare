@@ -7,7 +7,8 @@ import java.net.URL;
 import java.util.List;
 
 /**
- * Created by anas on 12.08.17.
+ * AsyncTaskLoader that connects to the venues endpoint, parse the json, and return
+ * a list of venues.
  */
 
 class VenueLoader extends AsyncTaskLoader<List<Venue>> {

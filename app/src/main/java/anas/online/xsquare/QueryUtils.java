@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by anas on 12.08.17.
+ * A utility class to query API endpoints, parse the Json results, and return required objects.
  */
 
 final class QueryUtils {
@@ -23,8 +23,9 @@ final class QueryUtils {
     private QueryUtils() {
     }
 
+    // Perform HTTP request to the URL and receive a JSON response back
     public static List<Venue> fetchVenueData(URL requestUrl) {
-        // Perform HTTP request to the URL and receive a JSON response back
+
         String jsonResponse = null;
         try {
             jsonResponse = ConnectionUtils.makeHttpRequest(requestUrl);
@@ -32,13 +33,11 @@ final class QueryUtils {
             Log.e(TAG, "Problem making the HTTP request.", e);
         }
 
-        // Extract relevant fields from the JSON response, create a list of movies and return it
-
+        // Extract relevant fields from the JSON response, create a list of venues and return it
         return extractVenueDataFromJson(jsonResponse);
     }
 
     // Return a list of Venue objects that has been built up from parsing the given JSON response.
-
     private static List<Venue> extractVenueDataFromJson(String venueJSON) {
 
         String address;
@@ -64,8 +63,8 @@ final class QueryUtils {
 
             // For each venue in the venuesArray, create a Venue object
             for (int i = 0; i < venuesArray.length(); i++) {
-                // Get a single venue item at position i within the list of venues
 
+                // Get a single venue item at position i within the list of venues
                 JSONObject currentVenue = venuesArray.getJSONObject(i);
 
                 // Extract the venue id
@@ -77,14 +76,13 @@ final class QueryUtils {
                 // Extract the location object to get the location data
                 JSONObject locationObject = currentVenue.getJSONObject("location");
 
-                // Extract the address
-
+                // Extract the address, and handle the case when address is not available
                 if (locationObject.isNull("address")) {
                     address = "Address is not available";
                 } else {
-
                     address = locationObject.getString("address");
                 }
+
                 // Extract the distance
                 String distance = locationObject.getString("distance");
 
@@ -93,7 +91,6 @@ final class QueryUtils {
 
                 // Add the new Venue to the list of venues
                 venues.add(venue);
-
             }
 
         } catch (JSONException e) {
@@ -102,12 +99,12 @@ final class QueryUtils {
             // with the message from the exception.
             Log.e("QueryUtils", "Problem parsing the venue JSON results", e);
         }
-        // Return the list of movies
+        // Return the list of venues
         return venues;
     }
 
+    // Perform HTTP request to the URL and receive a JSON response back
     public static String fetchPhotoUrl(URL requestUrl) {
-        // Perform HTTP request to the URL and receive a JSON response back
         String jsonResponse = null;
         try {
             jsonResponse = ConnectionUtils.makeHttpRequest(requestUrl);
@@ -115,8 +112,7 @@ final class QueryUtils {
             Log.e(TAG, "Problem making the HTTP request.", e);
         }
 
-        // Extract relevant fields from the JSON response, create a list of movies and return it
-
+        // Extract relevant fields from the JSON response, create the photo url and return it
         return extractPhotoUrlFromJson(jsonResponse);
     }
 
@@ -139,6 +135,7 @@ final class QueryUtils {
             JSONObject response = root.getJSONObject("response");
             JSONObject photosObject = response.getJSONObject("photos");
 
+            // Make sure the app doesn't crash when no photos are available
             int count = photosObject.getInt("count");
 
             if (count == 0) {
@@ -153,7 +150,6 @@ final class QueryUtils {
                 String UrlSuffix = photoObject.getString("suffix");
 
                 // Create the full photo url
-
                 photoUrl = UrlPrefix + "original" + UrlSuffix;
             }
         } catch (JSONException e) {
@@ -162,9 +158,7 @@ final class QueryUtils {
             // with the message from the exception.
             Log.e("QueryUtils", "Problem parsing the venue JSON results", e);
         }
-        // Return the list of movies
+        // Return the photo url
         return photoUrl;
     }
-
-
 }

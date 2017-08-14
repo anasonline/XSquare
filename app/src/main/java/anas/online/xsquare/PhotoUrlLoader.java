@@ -6,7 +6,9 @@ import android.content.AsyncTaskLoader;
 import java.net.URL;
 
 /**
- * Created by anas on 13.08.17.
+ * AsyncTaskLoader to connect to the photos endpoint for a venue, parse the json, and return
+ * the full photo url (in our case we want to show only one photo for each venue
+ * so we get only the first photo returned by the API.
  */
 
 class PhotoUrlLoader extends AsyncTaskLoader<String> {

@@ -11,13 +11,13 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 /**
- * Created by anas on 13.08.17.
+ * A utility class with required methods to open an Internet connection
  */
 
 final class ConnectionUtils {
     private static final String TAG = ConnectionUtils.class.getSimpleName();
 
-    // Private constructor - no one should create a QueryUtils object.
+    // Private constructor - no one should create a ConnectionUtils object.
     private ConnectionUtils() {
     }
 
@@ -48,7 +48,7 @@ final class ConnectionUtils {
                 Log.e(TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(TAG, "Problem retrieving the Movie JSON results.", e);
+            Log.e(TAG, "Problem retrieving the JSON results.", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -79,5 +79,4 @@ final class ConnectionUtils {
         }
         return output.toString();
     }
-
 }
