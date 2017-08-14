@@ -129,7 +129,10 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public void onLoadFinished(Loader<String> loader, String s) {
-        Picasso.with(this).load(s).placeholder(R.drawable.placeholder).into(photo);
+        Picasso.with(this).load(s).placeholder(R.drawable.placeholder)
+                .centerCrop()
+                .fit()
+                .into(photo);
         mLoadingIndicator.setVisibility(View.GONE);
     }
 
