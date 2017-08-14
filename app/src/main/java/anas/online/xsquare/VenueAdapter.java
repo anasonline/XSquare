@@ -19,15 +19,16 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.VenueAdapter
     private final Context mContext;
     private List<Venue> mVenues;
     private int mRowLayout;
-    private VenueAdapterOnClickHandler mClickHander;
+    private VenueAdapterOnClickHandler mClickHandler;
 
 
-    public VenueAdapter(List<Venue> venues, int rowLayout, Context context) {
+    public VenueAdapter(List<Venue> venues, int rowLayout, Context context,
+                        VenueAdapterOnClickHandler clickHandler) {
 
         mVenues = venues;
         mContext = context;
         mRowLayout = rowLayout;
-        //mClickHander = clickHandler;
+        mClickHandler = clickHandler;
     }
 
     @Override
@@ -50,8 +51,6 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.VenueAdapter
         holder.name.setText(name);
         holder.address.setText(address);
         holder.distance.setText(distance);
-
-
     }
 
     @Override
@@ -67,7 +66,7 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.VenueAdapter
         notifyDataSetChanged();
     }
 
-    interface VenueAdapterOnClickHandler {
+    public interface VenueAdapterOnClickHandler {
         void onClick(Venue venue);
     }
 
@@ -91,7 +90,9 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.VenueAdapter
 
         @Override
         public void onClick(View view) {
-
+            int adapterPosition = getAdapterPosition();
+            Venue venue = mVenues.get(adapterPosition);
+            mClickHandler.onClick(venue);
         }
     }
 }

@@ -2,6 +2,7 @@ package anas.online.xsquare;
 
 import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -24,7 +25,8 @@ import anas.online.xsquare.model.Venue;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Venue>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Venue>>,
+        VenueAdapter.VenueAdapterOnClickHandler {
 
     private final static String TAG = MainActivity.class.getSimpleName();
     private static final int VENUE_LOADER_ID = 1; // Constant value for the Venue loader ID.
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mRecyclerView = (RecyclerView) findViewById(R.id.venues_recycler_view);
         setupGridLayout();
 
-        mVenueAdapter = new VenueAdapter(mVenues, R.layout.item_venue, getApplicationContext());
+        mVenueAdapter = new VenueAdapter(mVenues, R.layout.item_venue, getApplicationContext(), this);
         mRecyclerView.setAdapter(mVenueAdapter);
         mVenueAdapter.swapList(mVenues);
 
@@ -143,5 +145,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void showErrorMessage() {
         mLoadingIndicator.setVisibility(View.GONE);
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onClick(Venue venue) {
+        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+        // Put the Parcelable Venue object into an intent
+        intent.putExtra("EXTRA_MOVIE", venue);
+        startActivity(intent);
     }
 }
